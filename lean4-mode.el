@@ -12,7 +12,7 @@
 ;; Maintainer: Lua <me@lua.blog.br>
 ;; Created: Jan 09, 2014
 ;; Keywords: languages
-;; Package-Requires: ((emacs "27.1") (eglot "1.15") (simple-httpd "1.5.1") (websocket "1.15"))
+;; Package-Requires: ((emacs "27.1") (eglot "1.15") (eglot-semtok) (simple-httpd "1.5.1") (websocket "1.15"))
 ;; URL: https://github.com/estradilua/lean4-minimal-mode
 ;; SPDX-License-Identifier: Apache-2.0
 
@@ -92,7 +92,6 @@ Invokes `lean4-mode-hook'."
               comment-end-skip "[ \t]*\\(-/\\|\\s>\\)"
               comment-padding 1
               comment-use-syntax t
-              font-lock-defaults lean4-font-lock-defaults
               indent-tabs-mode nil)
   (add-to-list (make-local-variable 'project-find-functions) #'lean4--project)
 

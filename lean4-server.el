@@ -25,7 +25,6 @@
 ;;; Code:
 
 (require 'eglot)
-(require 'websocket)
 (require 'eglot-semtok)
 
 ;; Eglot subclass definition
@@ -35,6 +34,7 @@
 ;; Setup Eglot
 (add-hook 'lean4-mode-hook #'eglot-ensure)
 (add-to-list 'eglot-server-programs '(lean4-mode eglot-lean4-server "lake" "serve"))
+(add-to-list 'eglot-semtok-faces '("leanSorryLike" . font-lock-warning-face))
 
 ;; Commands (requests)
 (defun lean4-restart-file ()

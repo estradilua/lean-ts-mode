@@ -142,10 +142,10 @@
     ;; Initialize, either with the current buffer, or some other Lean server
     (lean4-infoview--send-location)
     (let* ((current (eglot-current-server))
-           (server (or (and (eglot-lean4-server-p current) current)
+           (server (or (and (cl-typep current 'eglot-lean4-server) current)
                        (cl-loop for servers hash-values of eglot--servers-by-project do
                                 (dolist (server servers)
-                                  (when (eglot-lean4-server-p server)
+                                  (when (cl-typep server 'eglot-lean4-server)
                                     (cl-return server)))))))
       (lean4-infoview--send-initialize server))))
 
@@ -299,14 +299,14 @@
 
 (defun lean4-infoview--send-location (&rest _)
   "Send current location to all connections."
-  (when (eglot-lean4-server-p (eglot-current-server))
+  (when (cl-typep (eglot-current-server) 'eglot-lean4-server)
     (dolist (conn lean4-infoview--connections)
       (jsonrpc-notify conn :changedCursorLocation
                       (list :loc (lean4-infoview--location))))))
 
 (defun lean4-infoview--send-initialize (server)
   "Send initialization info of SERVER to all connections."
-  (when (eglot-lean4-server-p server)
+  (when (cl-typep server 'eglot-lean4-server)
     (with-slots (capabilities server-info) server
       (dolist (conn lean4-infoview--connections)
         (jsonrpc-notify conn :serverRestarted
