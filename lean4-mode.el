@@ -54,6 +54,12 @@
 (defvar lean4-mode-map (make-sparse-keymap)
   "Keymap used in Lean mode.")
 
+(defvar lean4-inhibit-eglot-logs t
+  "Disable Eglot logging in Lean buffers.
+
+Since the Lean server is extremely chatty, you should set it to t for a
+big performance improvement if you are not debugging the server.")
+
 (defun lean4--project (initial)
   "Find the Lean 4 project for path INITIAL.
 
@@ -74,7 +80,6 @@ of the parent project."
 (cl-defmethod project-root ((project (head lean4)))
   (cdr project))
 
-;; Automode List
 ;;;###autoload
 (define-derived-mode lean4-mode prog-mode "Lean 4"
   "Major mode for Lean.
@@ -93,6 +98,10 @@ Invokes `lean4-mode-hook'."
               comment-padding 1
               comment-use-syntax t
               indent-tabs-mode nil)
+
+  (when lean4-inhibit-eglot-logs
+    (setq-local eglot-events-buffer-config '(:size 0)))
+  
   (add-to-list (make-local-variable 'project-find-functions) #'lean4--project)
 
   ;; Input (required here as to load lazily)
