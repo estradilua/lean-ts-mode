@@ -26,9 +26,10 @@
 
 (require 'eglot)
 (require 'websocket)
+(require 'eglot-semtok)
 
 ;; Eglot subclass definition
-(defclass eglot-lean4-server (eglot-lsp-server) ()
+(defclass eglot-lean4-server (eglot-semtok-server) ()
   :documentation "Eglot Lean4 server.")
 
 ;; Setup Eglot
