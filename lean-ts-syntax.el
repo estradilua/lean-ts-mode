@@ -29,7 +29,7 @@
 
 (require 'rx)
 
-(defconst lean4-mode-syntax-table
+(defconst lean-ts-mode-syntax-table
   (let ((st (make-syntax-table)))
     ;; Matching parens
     (modify-syntax-entry ?\[ "(]" st)
@@ -101,5 +101,5 @@
 
     st))
 
-(provide 'lean4-syntax)
-;;; lean4-syntax.el ends here
+(provide 'lean-ts-syntax)
+;;; lean-ts-syntax.el ends here

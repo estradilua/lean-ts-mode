@@ -1,4 +1,4 @@
-;;; lean4-server.el --- Eglot server class definition for lean4-mode  -*- lexical-binding: t; -*-
+;;; lean-ts-server.el --- Eglot server class definition for lean-ts-mode  -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2025 Lua Reis. All rights reserved.
 
@@ -28,16 +28,16 @@
 (require 'eglot-semtok)
 
 ;; Eglot subclass definition
-(defclass eglot-lean4-server (eglot-semtok-server) ()
-  :documentation "Eglot Lean4 server.")
+(defclass eglot-lean-ts-server (eglot-semtok-server) ()
+  :documentation "Eglot Lean-ts server.")
 
 ;; Setup Eglot
-(add-hook 'lean4-mode-hook #'eglot-ensure)
-(add-to-list 'eglot-server-programs '(lean4-mode eglot-lean4-server "lake" "serve"))
+(add-hook 'lean-ts-mode-hook #'eglot-ensure)
+(add-to-list 'eglot-server-programs '(lean-ts-mode eglot-lean-ts-server "lake" "serve"))
 (add-to-list 'eglot-semtok-faces '("leanSorryLike" . font-lock-warning-face))
 
 ;; Commands (requests)
-(defun lean4-restart-file ()
+(defun lean-ts-restart-file ()
   "Refresh the file dependencies.
 
 This function restarts the server subprocess for the current
@@ -48,5 +48,5 @@ file, recompiling, and reloading all imports."
     (eglot--signal-textDocument/didOpen)))
 
 
-(provide 'lean4-server)
-;;; lean4-server.el ends here
+(provide 'lean-ts-server)
+;;; lean-ts-server.el ends here
