@@ -75,7 +75,15 @@ of the parent project."
                 file-name (file-name-directory (directory-file-name dir))))))
     (when root (cons 'lean4 root))))
 
+(defun lean-ts--toolchain-project (initial)
+  "Find the Lean 4 root for a path INITIAL inside a toolchain directory."
+  (when (string-match "\\`\\(.*/toolchains/[^/]*/src/lean\\)/.*\\'" initial)
+    (cons 'lean4-toolchain (match-string 1 initial))))
+
 (cl-defmethod project-root ((project (head lean4)))
+  (cdr project))
+
+(cl-defmethod project-root ((project (head lean4-toolchain)))
   (cdr project))
 
 ;;;###autoload
@@ -100,7 +108,8 @@ Invokes `lean-ts-mode-hook'."
   (when lean-ts-inhibit-eglot-logs
     (setq-local eglot-events-buffer-config '(:size 0)))
   
-  (add-to-list (make-local-variable 'project-find-functions) #'lean-ts--project))
+  (add-to-list (make-local-variable 'project-find-functions) #'lean-ts--eglot-project)
+  (add-to-list (make-local-variable 'project-find-functions) #'lean-ts--toolchain-project 'append))
 
   ;; Infoview
   ;; (add-hook 'eldoc-documentation-functions #'lean4-infoview--send-location t t))
