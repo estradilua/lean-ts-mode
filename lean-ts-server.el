@@ -28,12 +28,12 @@
 (require 'eglot-semtok)
 
 ;; Eglot subclass definition
-(defclass eglot-lean-ts-server (eglot-semtok-server) ()
-  :documentation "Eglot Lean-ts server.")
+(defclass lean-ts-eglot-server (eglot-semtok-server) ()
+  :documentation "Lean server class for Eglot.")
 
 ;; Setup Eglot
 (add-hook 'lean-ts-mode-hook #'eglot-ensure)
-(add-to-list 'eglot-server-programs '(lean-ts-mode eglot-lean-ts-server "lake" "serve"))
+(add-to-list 'eglot-server-programs '(lean-ts-mode lean-ts-eglot-server "lake" "serve"))
 (add-to-list 'eglot-semtok-faces '("leanSorryLike" . font-lock-warning-face))
 
 ;; Commands (requests)
