@@ -56,7 +56,7 @@ big performance improvement unless you are debugging the server.")
      @font-lock-keyword-face))
   "The tree-sitter font lock settings for lean.")
 
-(defun lean-ts--project (initial)
+(defun lean-ts--eglot-project (initial)
   "Find the Lean 4 project for path INITIAL.
 
 Starting from INITIAL, repeatedly look up the
@@ -109,7 +109,10 @@ Invokes `lean-ts-mode-hook'."
     (setq-local eglot-events-buffer-config '(:size 0)))
   
   (add-to-list (make-local-variable 'project-find-functions) #'lean-ts--eglot-project)
-  (add-to-list (make-local-variable 'project-find-functions) #'lean-ts--toolchain-project 'append))
+  (add-to-list (make-local-variable 'project-find-functions) #'lean-ts--toolchain-project 'append)
+
+  (require 'lean-ts-input)
+  (set-input-method "Lean"))
 
   ;; Infoview
   ;; (add-hook 'eldoc-documentation-functions #'lean4-infoview--send-location t t))
